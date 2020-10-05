@@ -1,0 +1,10 @@
+scikit-learn>=0.23.0
+numpy>=1.16.4
+pandas>=0.24.2
+requests
+boto3
+python-dotenv
+flask
+pytest
+pytest-cov
+
