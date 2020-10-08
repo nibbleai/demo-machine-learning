@@ -83,7 +83,8 @@ def load_from_cache(filepath: Union[Path, str]) -> Any:
 
 def remove_file(filepath: Union[Path, str]) -> None:
     filepath = Path(filepath)
-    filepath.unlink()
+    if not filepath.is_dir():
+        filepath.unlink()
 
 
 def cache_has_expired(filepath: Union[Path, str]) -> bool:
