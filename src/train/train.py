@@ -30,7 +30,8 @@ def train(estimator: SklearnEstimator,
 
     if optimize:
         best_estimator, cv_log_losses = hyperopt(
-            estimator, X_train, y_train, param_grid=get_param_grid())
+            estimator, X_train, y_train, param_grid=get_param_grid()
+        )
     else:
         cv_log_losses = cross_validate(estimator, X_train, y_train)
         best_estimator = estimator
@@ -43,7 +44,7 @@ def train(estimator: SklearnEstimator,
     logger.info(f'Log loss on test set: {test_log_loss:.4f}')
 
     if log:
-        log_experiment(estimator, data, test_log_loss, cv_log_losses)
+        log_experiment(best_estimator, data, test_log_loss, cv_log_losses)
 
     return test_log_loss, cv_log_losses
 
