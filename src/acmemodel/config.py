@@ -12,7 +12,7 @@ except OSError:
 
 __LOC__ = Path(__file__).resolve()
 
-ROOT_DIR = __LOC__.parents[1]
+ROOT_DIR = __LOC__.parents[2]
 OUTPUT_DIR = ROOT_DIR / 'output'
 DATA_DIR = ROOT_DIR / 'data'
 LOG_DIR = ROOT_DIR / 'logs'
@@ -66,7 +66,7 @@ LOGGING_CONFIG = {
         }
     },
     'loggers': {
-        'src': {  # logging config for this project only
+        'acmemodel': {  # logging config for this project only
             'handlers': ['stream', 'file'],
             'level': 'DEBUG',
             'propagate': False

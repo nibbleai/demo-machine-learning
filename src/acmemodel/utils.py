@@ -103,7 +103,7 @@ def find_experiment_directory(model_id: str) -> Path:
     for file in OUTPUT_DIR.rglob('*'):
         # Look for an index file named after this model_id. Index files are
         # stored along with other experiments data by the ExperimentLog object.
-        # Cf. src.train.log
+        # Cf. acmemodel.train.log
         if model_id in file.name:
             return file.parent
 

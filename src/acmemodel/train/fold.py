@@ -5,7 +5,7 @@ import logging
 
 from sklearn.model_selection import StratifiedKFold
 
-from src import config
+from acmemodel import config
 
 
 logger = logging.getLogger(__name__)
