@@ -1,0 +1,39 @@
+{
+	"name": "engineer",
+	"dockerComposeFile": [
+		"docker-compose.yml"
+	],
+	"service": "devtest",
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"terminal.integrated.profiles.linux": {
+					"zsh (login)": {
+						"path": "zsh",
+						"args": [
+							"-l"
+						]
+					}
+				}
+			},
+			"extensions": [
+				"ms-python.python",
+				"ms-toolsai.jupyter",
+				"sonarsource.sonarlint-vscode",
+				"amazonwebservices.aws-toolkit-vscode",
+				"ms-kubernetes-tools.vscode-kubernetes-tools",
+				"hashicorp.terraform",
+				"hashicorp.hcl",
+				"ms-azuretools.vscode-docker",
+				"ms-vscode-remote.remote-containers",
+				"ms-azuretools.vscode-docker",
+				"ms-vscode.makefile-tools",
+				"bierner.markdown-mermaid"
+			]
+		}
+	},
+	"forwardPorts": [],
+	"workspaceFolder": "/home/jovyan/work",
+	"shutdownAction": "stopCompose",
+	"remoteUser": "jovyan"
+}

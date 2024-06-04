@@ -1,0 +1,76 @@
+---
+version: "3.9"
+services:
+  # ---------------------
+  # Definição do serviço
+  # ---------------------
+  devtest:
+    restart: unless-stopped
+    # Nome da Imagem na sua maquina
+    image: localdevelopment
+    # platform: linux/amd64
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    # Definindo environment
+    environment:
+      ENVIRONMENT: development
+      MPLCONFIGDIR: /home/jovyan/
+    env_file:
+      - .env
+    # Definindo Host name (Container)
+    # hostname: pylabs
+    # Definindo o usuário e grupo como os logados na maquina Host (permissão)
+    # user: "${UID}:${GID}"
+    # Definindo onde o container deve inicializar
+    # working_dir: /home/projects
+    # Security docker
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp:unconfined
+    # Limitando recursos
+    cpu_count: 4
+    # cpu_shares: 4096
+    mem_limit: 4G
+    mem_reservation: 2G
+    # Mapeando o Sua pasta de desenvolvimento para o Container
+    volumes:
+      - ../:/home/jovyan/work
+    # - /var/run/docker.sock:/var/run/docker.sock
+    extra_hosts:
+      - "zeus.local:${MYIP:-172.16.17.146}"
+      - "todo.zeus.local:${MYIP:-172.16.17.146}"
+    networks:
+      back-tier:
+        aliases:
+          - localenv
+    # Bind de porta Host:Container para teste e debug
+    ports:
+      - 8888 # teste
+      # - 9229:9229 # debug
+      # - 8082:8000 # Fast API
+      # - 3000:3000 # Node
+
+      # Define rede do banco de dados
+      # Espere o banco de dados começar
+    # depends_on:
+    #   db:
+    #     condition: service_healthy
+    # Comando fake para manter o container rodando
+    command: "start-notebook.sh --NotebookApp.allow_origin='*' --NotebookApp.ip='0.0.0.0' --NotebookApp.token="
+
+volumes:
+  # Evita perda de dados do container de DB
+  postgres_data: {}
+  cache:
+    driver: local
+
+networks:
+  # Separa as redes de Banco de dados das demais
+  back-tier:
+    driver: bridge
+    # ipam:
+    # driver: default
+    # config:
+    # - subnet: 172.19.0.0/24
