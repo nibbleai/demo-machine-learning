@@ -8,14 +8,27 @@ from .config import (AWS_S3_BUCKET_NAME, AWS_SECRET_ACCESS_KEY,
                      AWS_ACCESS_KEY_ID)
 
 SESSION = boto3.Session(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
+
 S3 = SESSION.client('s3')
+
 REQUIRED_ENV_VARS = (
     AWS_S3_BUCKET_NAME, AWS_SECRET_ACCESS_KEY, AWS_ACCESS_KEY_ID
 )
 
 logger = getLogger(__name__)
 
+def check_aws_config(func: Callable) -> Callable:
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        if any(key is None for key in REQUIRED_ENV_VARS):
+            raise ValueError(
+                "AWS credentials and default bucket name must be "
+                "provided as enviroment variables. Check 'config.py' for info."
+            )
+        return func(*args, **kwargs)
+    return wrapper
 
+@check_aws_config
 def upload_data_to_s3(data: bytes, key: str,
                       bucket: str = AWS_S3_BUCKET_NAME) -> None:
     if any(key is None for key in REQUIRED_ENV_VARS):
@@ -31,7 +44,7 @@ def upload_data_to_s3(data: bytes, key: str,
         Key=key
     )
 
-
+@check_aws_config
 def download_data_from_s3(key: str, bucket: str = AWS_S3_BUCKET_NAME) -> bytes:
     if any(key is None for key in REQUIRED_ENV_VARS):
         raise ValueError(

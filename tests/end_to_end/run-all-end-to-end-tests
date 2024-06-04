@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+BASEDIR=$(git rev-parse --show-toplevel)
+
+for file in $(ls $BASEDIR/tests/**/*.sh);do
+  bash $file
+done

@@ -29,7 +29,8 @@
 				"ms-azuretools.vscode-docker",
 				"ms-vscode.makefile-tools",
 				"bierner.markdown-mermaid"
-			]
+			],
+			"extensions.signverifier": false
 		}
 	},
 	"forwardPorts": [],

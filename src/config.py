@@ -6,7 +6,11 @@ from pathlib import Path
 from dotenv import load_dotenv, find_dotenv
 
 try:
-    load_dotenv(find_dotenv(raise_error_if_not_found=True))
+    load_dotenv(find_dotenv( raise_error_if_not_found=True))
+except OSError:
+    if not os.environ.get('AWS_ACCESS_KEY_ID'):
+        raise OSError("Environment variables not set")
+
 except OSError:
     raise RuntimeError("'.env' file not found.")
 
