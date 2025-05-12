@@ -51,7 +51,7 @@ class PreviousTimeToNet(BaseFeature, ColumnExtractorMixin):
 class Hitpoint(BaseFeature):
 
     def fit(self, X, y=None):
-        encoder = OneHotEncoder(drop='first', sparse=False)
+        encoder = OneHotEncoder(drop='first', sparse_output=False)
         self.encoder = encoder.fit(X[['hitpoint']])
         return self
 
